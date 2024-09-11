@@ -1,0 +1,21 @@
+#imageContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.relative {
+    position: relative;
+}
+
+.object-contain {
+    max-width: 100%; /* Ensure images don’t overflow their container */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.overlay {
+    /* Optional: Style overlay as needed */
+}
+
+button {
+    /* Style the button as needed */
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Image Editor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <div class="flex h-screen">
+        <!-- Left Sidebar -->
+        <div class="w-1/4 bg-white p-6 overflow-y-auto shadow-lg border-r border-gray-200">
+            <h1 class="text-3xl font-bold mb-8 text-gray-800 border-b pb-4">Image Editor</h1>
+
+            <div class="space-y-8">
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
+                    <label for="imageUpload" class="block text-gray-700 font-medium mb-2">Upload Images:</label>
+                    <input type="file" id="imageUpload" multiple accept="image/*"
+                        class="block w-full text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
+                    <label for="textInput" class="block text-gray-700 font-medium mb-2">Add Text:</label>
+                    <input type="text" id="textInput" placeholder="Enter text to add"
+                        class="w-full text-gray-700 border border-gray-300 rounded-lg py-2 px-3 mb-2">
+                    <div class="flex space-x-2 mb-2">
+                        <input type="number" id="fontSize" min="10" max="100" value="20"
+                            class="w-20 text-gray-700 border border-gray-300 rounded-lg py-2 px-3">
+                        <input type="color" id="textColor" value="#ffffff" class="h-10 w-10 rounded-md border-gray-300">
+                    </div>
+                    <button id="addTextBtn"
+                        class="w-full bg-blue-500 text-white rounded-lg py-2 hover:bg-blue-600 transition duration-300">Add
+                        Text</button>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
+                    <label for="overlayImageUpload" class="block text-gray-700 font-medium mb-2">Add Overlay
+                        Image:</label>
+                    <input type="file" id="overlayImageUpload" accept="image/*"
+                        class="block w-full text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 mb-2">
+                    <input type="number" id="overlayWidth" min="10" max="500" value="100"
+                        class="w-20 text-gray-700 border border-gray-300 rounded-lg py-2 px-3">
+                    <button id="addOverlayBtn"
+                        class="w-full bg-blue-500 text-white rounded-lg py-2 hover:bg-blue-600 transition duration-300">Add
+                        Overlay Image</button>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
+                    <label for="overlayColor" class="block text-gray-700 font-medium mb-2">Overlay Color:</label>
+                    <input type="color" id="overlayColor" value="#000000" class="h-10 w-full mb-2 rounded-md border-gray-300">
+                    <label for="overlayOpacity" class="block text-gray-700 font-medium mb-2">Overlay Opacity: <span
+                            id="opacityValue">0.5</span></label>
+                    <input type="range" id="overlayOpacity" min="0" max="1" step="0.1" value="0.5" class="w-full">
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
+                    <div class="space-y-2 mb-4">
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" id="applyToAll" class="form-checkbox h-5 w-5 text-blue-500">
+                            <span class="ml-2 text-gray-700">Apply to all images</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" id="addOverlay" class="form-checkbox h-5 w-5 text-blue-500">
+                            <span class="ml-2 text-gray-700">Add overlay</span>
+                        </label>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="downloadFormat" class="block text-gray-700 font-medium mb-2">Download Format:</label>
+                        <select id="downloadFormat" class="w-full text-gray-700 border border-gray-300 rounded-lg py-2 px-3">
+                            <option value="webp">WebP</option>
+                            <option value="png">PNG</option>
+                            <option value="jpeg">JPEG</option>
+                        </select>
+                    </div>
+
+                    <button id="downloadAllBtn"
+                        class="w-full bg-green-500 text-white rounded-lg py-2 hover:bg-green-600 transition duration-300">Download
+                        All Images</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Content Area -->
+        <div class="w-3/4 flex flex-col">
+            <div class="p-4 bg-white shadow-md">
+                <label class="inline-flex items-center">
+                    <input type="checkbox" id="liveChanges" class="form-checkbox h-5 w-5 text-blue-500">
+                    <span class="ml-2 text-gray-700">Live Changes</span>
+                </label>
+            </div>
+            <div class="flex-grow p-6 overflow-x-auto ">
+                <div id="imageContainer" class="flex space-x-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>
